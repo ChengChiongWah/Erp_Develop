@@ -1,0 +1,51 @@
+
+<odoo>
+    <data>
+        <!-- top menu item -->
+        <menuitem name="Wah_Test" id="wah_test.menu_root" sequence="999"/>
+        <menuitem name="Teacher_Student_Course" id="wah_test.menu1" parent="wah_test.menu_root"/>
+
+        <record id="action_list_teacher" model="ir.actions.act_window">
+            <field name="name">Name</field>
+            <field name="res_model">wah.test.teacher</field>
+            <field name="view_model">tree, form</field>
+        </record>
+
+        <menuitem name="Teacher" id="wah_test_teacher"
+                  parent="wah_test.menu1"
+                  action="action_list_teacher"
+                  sequence="1"/>
+
+        <record id="Teacher_view_tree" model="ir.ui.view">
+            <field name="name">teacher.viewer.tree</field>
+            <field name="model">wah.test.teacher</field>
+            <field name="arch" type="xml">
+                <tree string="teacher_view_tree">
+                    <field name="name"/>
+                    <field name="course_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="Teacher_view_form" model="ir.ui.view">
+            <field name="name">teacher.viewer.form</field>
+            <field name="model">wah.test.teacher</field>
+            <field name="arch" type="xml">
+                <form string="teacher_view_form">
+                    <sheet>
+                        <group name="main_field_group">
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="course_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

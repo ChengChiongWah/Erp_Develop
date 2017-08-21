@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_reject" model="ir.actions.act_window">
+            <field name="name">Reject Goods</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.reject</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_sale_reject_goods" parent="sales_team.menu_sales" action="action_reject"
+                  sequence="99"/>
+
+        <record id="view_sale_reject_tree" model="ir.ui.view">
+            <field name="name">sale.reject.tree</field>
+            <field name="model">sale.reject</field>
+            <field name="arch" type="xml">
+                <tree string="sale_reject_view_tree">
+                    <field name="name" string="Order Number"/>
+                    <field name="partner_id"/>
+                    <field name="date_order"/>
+                    <field name="validity_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_reject_form" model="ir.ui.view">
+            <field name="name">sale.reject.form</field>
+            <field name="model">sale.reject</field>
+            <field name="arch" type="xml">
+                <form string="Sales Reject Form" class="o_sale_order">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" domain="[('customer','=',True),('is_company','=',True)]"
+                                       context="{'search_default_customer':1, 'show_address': 1}"
+                                       options='{"always_reload": True}'/>
+                            </group>
+                            <group>
+                                <field name="date_order"/>
+                                <field name="validity_date"/>
+                                <field name="payment_term_id" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sale Reject Lines">
+                                <field name="reject_line" mode="tree,kanban">
+                                    <form string="Sales Reject Lines">
+                                        <group>
+                                            <group>
+                                                <field name="product_id"
+                                                       context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'uom':product_uom, 'company_id': parent.company_id}"/>
+                                                <label for="product_uom_qty" string="Ordered Quantity"/>
+                                                <div>
+                                                    <field
+                                                            context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+                                                            name="product_uom_qty" class="oe_inline"/>
+                                                    <field name="product_uom" groups="product.group_uom"
+                                                           class="oe_inline oe_no_button"/>
+                                                </div>
+                                                <label for="qty_delivered" string="Delivered Quantity"
+                                                       invisible="context.get('hide_sale')"/>
+                                                <div invisible="context.get('hide_sale')">
+                                                    <field name="qty_delivered"/>
+                                                </div>
+                                                <field name="price_unit"/>
+                                            </group>
+                                            <!--<group>-->
+                                            <!--<field name="tax_id" widget="many2many_tags"-->
+                                            <!--domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"-->
+                                            <!--/>-->
+                                            <!--<label for="customer_lead"/>-->
+                                            <!--<div>-->
+                                            <!--<field name="customer_lead" class="oe_inline"/>-->
+                                            <!--days-->
+                                            <!--</div>-->
+                                            <!--<label for="analytic_tag_ids"/>-->
+                                            <!--<div>-->
+                                            <!--<field name="analytic_tag_ids" widget="many2many_tags"/>-->
+                                            <!--</div>-->
+                                            <!--</group>-->
+                                        </group>
+                                        <label for="name"/>
+                                        <field name="name"/>
+                                        <!--<div groups="base.group_no_one">-->
+                                        <!--<label for="invoice_lines"/>-->
+                                        <!--<field name="invoice_lines"/>-->
+                                        <!--</div>-->
+                                    </form>
+                                    <tree string="Sales Reject Lines" editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="product_uom_qty"
+                                               string="Ordered Qty"/>
+                                        <field name="product_uom"/>
+                                        <field name="price_unit"/>
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string="Other Information">
+                                <group>
+                                    <group string="Sales Reject Information" name="sales_person">
+                                        <field name="user_id"/>
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!--<div class="oe_chatter">-->
+                    <!--<field name="message_follower_ids" widget="mail_followers"/>-->
+                    <!--<field name="message_ids" widget="mail_thread"/>-->
+                    <!--</div>-->
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

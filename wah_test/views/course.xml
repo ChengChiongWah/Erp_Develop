@@ -1,0 +1,56 @@
+
+<odoo>
+    <data>
+        <!-- top menu item -->
+        <menuitem name="Wah_Test" id="wah_test.menu_root" sequence="999"/>
+        <menuitem name="Teacher_Student_Course" id="wah_test.menu1" parent="wah_test.menu_root"/>
+
+        <record id="action_list_course" model="ir.actions.act_window">
+            <field name="name">Name</field>
+            <field name="res_model">wah.test.course</field>
+            <field name="view_model">tree, form</field>
+        </record>
+
+        <menuitem name="Course" id="wah_test_course"
+                  parent="wah_test.menu1"
+                  action="action_list_course"
+                  sequence="3"/>
+
+        <record id="course_view_tree" model="ir.ui.view">
+            <field name="name">course.viewer.tree</field>
+            <field name="model">wah.test.course</field>
+            <field name="arch" type="xml">
+                <tree string="course_view_tree" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'">
+                    <field name="name"/>
+                    <field name="teacher_id"/>
+                    <field name="student_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="course_view_form" model="ir.ui.view">
+            <field name="name">course.viewer.form</field>
+            <field name="model">wah.test.course</field>
+            <field name="arch" type="xml">
+                <form string="course_view_form">
+                    <head>
+                        <button string="开始课程" type="object" name="begin_course"/>
+                    </head>
+                    <sheet>
+                        <group name="main_field_group">
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="teacher_id"/>
+                                <field name="student_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

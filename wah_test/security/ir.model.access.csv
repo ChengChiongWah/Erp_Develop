@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wah_test_wah_test,wah_test.wah_test,model_wah_test_wah_test,,1,0,0,0
