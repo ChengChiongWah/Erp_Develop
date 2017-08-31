@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="test_extend.list">
+      <field name="name">test_extend list</field>
+      <field name="model">test_extend.test_extend</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="test_extend.action_window">
+      <field name="name">test_extend window</field>
+      <field name="res_model">test_extend.test_extend</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="test_extend.action_server">
+      <field name="name">test_extend server</field>
+      <field name="model_id" ref="model_test_extend_test_extend"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="test_extend" id="test_extend.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="test_extend.menu_1" parent="test_extend.menu_root"/>
+    <menuitem name="Menu 2" id="test_extend.menu_2" parent="test_extend.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="test_extend.menu_1_list" parent="test_extend.menu_1"
+              action="test_extend.action_window"/>
+    <menuitem name="Server to list" id="test_extend" parent="test_extend.menu_2"
+              action="test_extend.action_server"/>
+    -->
+  </data>
+</odoo>
