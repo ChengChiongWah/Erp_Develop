@@ -1,0 +1,248 @@
+3020MT-PC
+
+postgres
+postgres
+port:5432
+
+数据库：user01
+用户名：user01
+密 码 ：user01
+
+Br@git
+Script: F:\workspace\odoo10dev\odoo-bin 
+Script Parameters:-c odoo-server.conf    (--test-enable)
+
+
+CREATE ROLE user01 WITH
+  LOGIN
+  SUPERUSER
+  INHERIT
+  CREATEDB
+  CREATEROLE
+  REPLICATION;
+
+python.exe odoo-bin -c odoo-server.conf -i sale_stock --log-level=error -d user01 --test-enable --stop-after-init
+python.exe odoo-bin -c odoo-server.conf -u sale_stock -d user01 --stop-after-init
+http://localhost:1500/web/database/selector
+http://127.0.0.1:1500/web?debug=assert
+http://192.168.21.141:1500/web
+
+http://www.batar.cn:6080/    账号：zhengchanghua   密码：abcd1234
+http://192.168.16.3:8000/    账号：zhengchanghua   密码：abc123
+
+odoo 视频
+35 create a modle
+36 add a menu and an action to modle
+37 modle user many2one
+38 create form for modle
+...
+
+
+class patient(osv.osv):
+    'doctor_id':fields.many2one('doctor','Doctor'),
+
+class doctor(osv.osv):
+    'patient_id':fields.one2many('patient','doctor_id'),
+
+
+many2one(other_model, ondelete='set null')   
+one2many(other_model, relate_field)  
+    Because a One2many is a virtual relationship, there must be a Many2one field in the other_model, and its name must be related_field
+
+
+xml 
+tree page field record form 
+
+student  name age  
+teacher  name course_id
+course   name teacher_id student_id score
+
+
+Primary Key :标明一个表里的唯一值.不能为空.
+Foreign Key :标明这个值是另一个表里主键,但在这个表里可以有多个相同值.但必须在另一个表里存在.也可以为空.(many2one)
+
+apt install postgresql
+createuser --createdb --username postgres --no-createrole --pwprompt user
+
+fields.related and fields.function are replaced by using a normal field type with either a related= or a compute= parameter
+
+order_line = fields.One2many('sale.order.line', 'order_id', string='Order Lines', states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True)
+
+
+python odoo-bin scaffold extend_name extend_path
+
+    @api.multi
+    def create_invoices(self):
+        sale_orders = self.env['sale.order'].browse(self._context.get('active_ids', []))
+
+
+res.partners
+includes:
+
+    Customers - you have a res.partner entry for each customer plus a res.partner entry for each contact person or address (invoice to, deliver to) you set up for that customer.
+    Suppliers - same as customers. In fact, the only difference between the two is a boolean field on res.partner to say if they are a customer or supplier.
+    Users - each user allowed to log in to your OpenERP instance has a related res.partner to store address details.
+    Companies - each company you set up in OpenERP assuming you are using multi-company has a related res.parter to store address details.
+
+
+创建顺序 
+model--view（form tree）
+
+
+context -->上下文
+
+
+<field name="view_mode">tree,form</field>  --〉tree，form的中间不能有空格
+
+
+from odoo import models, fields, api, _   -->_比如_('New') 新增
+
+
+write
+self.write({'name': "Newer Name"})
+self.env['sale.reject']
+self.env.context.get('***')
+
+
+跳转到指定view
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'sale.reject',
+            'res_id': head.id,
+            'type': 'ir.actions.act_window',
+            'target': 'main',
+        }
+
+
+api.multi(method):
+  Decorate a record-style method where self is a recordset. The method typically defines an operation on records.
+api.model(method):
+  Decorate a record-style method where self is a recordset, but its contents is not relevant, only the model is
+api.depends(*args):
+  Return a decorator that specifies the field dependencies of a "compute" method (for new-style function fields). Each argument must be a string that consists in a dot-separated sequence of field names
+api.constrains(*args):
+  Decorates a constraint checker. Each argument must be a field name used in the check
+api.onchange(*args):
+  Return a decorator to decorate an onchange method for given fields. Each argument must be a field name
+api.returns(model, downgrade=None, upgrade=None):
+  Return a decorator for methods that return instances of model
+api.one(method):
+  Decorate a record-style method where self is expected to be a singleton instance. The decorated method automatically loops on records, and makes a list with the results. In case the method is decorated with returns(), it concatenates the resulting instances. Such a method
+
+新建一个本地分支并切换到本地新分支 
+ git checkout -b zhengchanghua origin/10.0.dev.btr
+如果已有本地分支可直接切换：
+ git checkout zhengchanghua
+接下来三步走
+ git add .
+ git commit -m "add sort on product"
+ git push origin origin/10.0.dev.btr
+
+gitcheckout加-b参数表示创建并切换 
+git checkout -b dev 
+相当于 git branch dev
+       git checkout dev
+
+"单下划线" 开始的成员变量叫做保护变量，意思是只有类对象和子类对象自己能访问到这些变量
+"双下划线" 开始的是私有成员，意思是只有类对象自己能访问，连子类对象也不能访问到这个数据。
+
+workflows
+
+draft(草稿） confirmed（确认）  done（完成）
+Draft-->  confirmed
+confirmed--> Draft
+confirmed-->Done
+Done-->Draft
+
+In order to check if instances of the workflow are correctly created alongside sessions, go to Settings ? Technical ? Workflows ? Instances
+
+http://www.cnblogs.com/toby2chen/p/6141261.html
+button 应用的比较多，这里来汇总一下
+
+按钮<button>，支持的属性
+     icon  可用的icon在 addons/web/static/src/img/icons
+     string 按钮的显示文字
+     type  值可以是 workflow, object action   默认是 workflow
+     name  就是要触发的方法标识
+     args  传递方法的参数
+     content 上下文
+     confirm  针对对话框的确认
+     special="cancel" 用于向导
+     states 可见的状态
+     classname 加载的类名(常用 oe_highlight)
+
+
+可以在单元测试中编写两个特殊的setUp()和tearDown()方法。这两个方法会分别在每调用一个测试方法的前后分别被执行。
+setUp()和tearDown()方法有什么用呢？设想你的测试需要启动一个数据库，这时，就可以在setUp()方法中连接数据库，在tearDown()方法中关闭数据库，这样，不必在每个测试方法中重复相同的代码：
+class TestDict(unittest.TestCase):
+
+    def setUp(self):
+        print 'setUp...'
+
+    def tearDown(self):
+        print 'tearDown...'
+
+self.env.ref()参数是xml id，用来获取xml id对应的记录
+self.env['model的_name']，用来获取model的引用
+
+
+
+
+many2many
+
+(0,0,{values}) 根据values里面的信息新建一个记录。
+  格式：[
+                (0, 0, {
+                    'name': self.product_id_1.name,
+                    'product_id': self.product_id_1.id,
+                    'product_qty': 5.0,
+                    'product_uom': self.product_id_1.uom_po_id.id,
+                    'price_unit': 500.0,
+                    'date_planned': datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                }),
+                (0, 0, {
+                    'name': self.product_id_2.name,
+                    'product_id': self.product_id_2.id,
+                    'product_qty': 5.0,
+                    'product_uom': self.product_id_2.uom_po_id.id,
+                    'price_unit': 250.0,
+                    'date_planned': datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                })]
+
+(1,ID,{values})更新id=ID的记录（写入values里面的数据）
+
+(2,ID) 删除id=ID的数据（调用unlink方法，删除数据以及整个主从数据链接关系）
+
+(3,ID) 切断主从数据的链接关系但是不删除这个数据
+
+(4,ID) 为id=ID的数据添加主从链接关系。
+
+(5) 删除所有的从数据的链接关系就是向所有的从数据调用(3,ID)
+
+(6,0,[IDs]) 用IDs里面的记录替换原来的记录（就是先执行(5)再执行循环IDs执行（4,ID））
+
+例子[(6, 0, [8, 5, 6, 4])] 设置 many2many to ids [8, 5, 6, 4]
+
+one2many
+
+(0, 0,{ values })根据values里面的信息新建一个记录。
+
+(1,ID,{values}) 更新id=ID的记录（对id=ID的执行write 写入values里面的数据）
+
+(2,ID) 删除id=ID的数据（调用unlink方法，删除数据以及整个主从数据链接关系）
+
+
+sys.argv[]说白了就是一个从程序外部获取参数的桥梁，这个“外部”很关键，所以那些试图从代码来说明它作用的解释一直没看明白。因为我们从外部取得的参数可以是多个，所以获得的是一个列表（list)，也就是说sys.argv其实可以看作是一个列表，所以才能用[]提取其中的元素。其第一个元素是程序本身，随后才依次是外部给予的参数。
+
+
+The object self.env gives access to request parameters and other useful things:
+
+    self.env.cr or self._cr is the database cursor object; it is used for querying the database
+    self.env.uid or self._uid is the current user's database id
+    self.env.user is the current user's record
+    self.env.context or self._context is the context dictionary
+    self.env.ref(xml_id) returns the record corresponding to an XML id
+    self.env[model_name] returns an instance of the given model
+
+select * from pg_database

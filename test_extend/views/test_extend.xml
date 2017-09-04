@@ -28,29 +28,6 @@
             </field>
         </record>
 
-        <!--<record id="course_view_form" model="ir.ui.view">-->
-            <!--<field name="name">model.test.viewer.form</field>-->
-            <!--<field name="model">test.model.extend</field>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<form string="course_view_form">-->
-                    <!--<head>-->
-                        <!--&lt;!&ndash;<button string="开始课程" type="object" name="begin_course"/>&ndash;&gt;-->
-                    <!--</head>-->
-                    <!--<sheet>-->
-                        <!--<group name="main_field_group">-->
-                            <!--<group>-->
-                                <!--&lt;!&ndash;<field name="name"/>&ndash;&gt;-->
-                            <!--</group>-->
-                            <!--<group>-->
-                                <!--&lt;!&ndash;<field name="teacher_id"/>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<field name="student_id"/>&ndash;&gt;-->
-                            <!--</group>-->
-                        <!--</group>-->
-                    <!--</sheet>-->
-                <!--</form>-->
-            <!--</field>-->
-        <!--</record>-->
-
     </data>
 
 </odoo>
